@@ -1,0 +1,199 @@
+{
+  "metadata": {
+    "id": "config-376713",
+    "timestamp": "2025-09-17T17:16:30.635099",
+    "version": "4.8.6",
+    "environment": "development",
+    "region": "us-east-1",
+    "created_by": "github_updater",
+    "purpose": "monitoring_config",
+    "checksum": "sha256:00000000001545b63bed3b3ecc5bcf911c34b8f4b848fad6e3a0267f88d2b77c"
+  },
+  "application": {
+    "name": "service-worker",
+    "description": "Microservice configuration for distributed architecture",
+    "port": 5080,
+    "host": "0.0.0.0",
+    "protocol": "grpc",
+    "health_check": {
+      "enabled": true,
+      "endpoint": "/health",
+      "interval": 47,
+      "timeout": 25,
+      "retries": 3
+    }
+  },
+  "database": {
+    "primary": {
+      "host": "db-primary-4.cluster.internal",
+      "port": 5432,
+      "database": "app_prod",
+      "ssl": true,
+      "pool_size": 33,
+      "max_connections": 250,
+      "connection_timeout": 15
+    },
+    "replica": {
+      "enabled": false,
+      "hosts": [
+        "db-replica-1.cluster.internal"
+      ],
+      "read_preference": "secondary_preferred",
+      "lag_threshold": 310
+    }
+  },
+  "redis": {
+    "enabled": true,
+    "host": "redis.cluster.internal",
+    "port": 6379,
+    "password_enabled": true,
+    "ssl": true,
+    "db": 6,
+    "max_connections": 154,
+    "connection_pool_size": 24,
+    "default_ttl": 2233
+  },
+  "features": {
+    "authentication": {
+      "enabled": true,
+      "providers": [
+        "oauth2",
+        "saml",
+        "api_key"
+      ],
+      "session_timeout": 2276,
+      "max_sessions_per_user": 6
+    },
+    "caching": {
+      "enabled": true,
+      "strategy": "write_behind",
+      "max_size": "287MB",
+      "default_ttl": 1540
+    },
+    "rate_limiting": {
+      "enabled": true,
+      "requests_per_minute": 593,
+      "burst_capacity": 14,
+      "window_size": 67
+    },
+    "monitoring": {
+      "enabled": true,
+      "metrics_interval": 10,
+      "log_level": "debug",
+      "tracing_enabled": true,
+      "sampling_rate": 0.5206130028091231
+    },
+    "notifications": {
+      "enabled": true,
+      "channels": [
+        "email",
+        "slack",
+        "webhook",
+        "push"
+      ],
+      "retry_attempts": 3,
+      "batch_size": 100
+    }
+  },
+  "security": {
+    "cors": {
+      "enabled": true,
+      "allowed_origins": [
+        "https://app.example.com"
+      ],
+      "allowed_methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "OPTIONS"
+      ],
+      "allowed_headers": [
+        "Content-Type",
+        "Authorization",
+        "X-API-Key"
+      ]
+    },
+    "encryption": {
+      "algorithm": "AES-256-GCM",
+      "key_rotation_days": 339,
+      "at_rest": true,
+      "in_transit": true
+    },
+    "headers": {
+      "x_frame_options": "DENY",
+      "x_content_type_options": "nosniff",
+      "x_xss_protection": "1; mode=block",
+      "strict_transport_security": "max-age=31536000; includeSubDomains"
+    }
+  },
+  "performance": {
+    "timeouts": {
+      "request": 27,
+      "database": 15,
+      "cache": 4,
+      "external_api": 53
+    },
+    "limits": {
+      "max_request_size": "42MB",
+      "max_file_upload": "38MB",
+      "max_concurrent_requests": 263
+    },
+    "optimization": {
+      "compression_enabled": true,
+      "minification": false,
+      "cdn_enabled": true,
+      "lazy_loading": true
+    }
+  },
+  "deployment": {
+    "strategy": "rolling",
+    "replicas": 7,
+    "auto_scaling": {
+      "enabled": true,
+      "min_replicas": 4,
+      "max_replicas": 20,
+      "cpu_threshold": 80,
+      "memory_threshold": 75
+    },
+    "health_checks": {
+      "startup_probe": {
+        "initial_delay": 16,
+        "period": 13,
+        "timeout": 1,
+        "failure_threshold": 6
+      },
+      "liveness_probe": {
+        "period": 13,
+        "timeout": 1,
+        "failure_threshold": 3
+      }
+    }
+  },
+  "monitoring_targets": [
+    {
+      "name": "endpoint-7",
+      "url": "https://api.example.com/v2/products",
+      "method": "POST",
+      "expected_status": 200,
+      "timeout": 22,
+      "interval": 129
+    },
+    {
+      "name": "endpoint-8",
+      "url": "https://api.example.com/v1/products",
+      "method": "GET",
+      "expected_status": 200,
+      "timeout": 12,
+      "interval": 229
+    },
+    {
+      "name": "endpoint-6",
+      "url": "https://api.example.com/v1/analytics",
+      "method": "POST",
+      "expected_status": 200,
+      "timeout": 18,
+      "interval": 141
+    }
+  ]
+}
