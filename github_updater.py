@@ -241,6 +241,10 @@ module.exports = {{ config, processRequest, validateData }};
         """Create a random file with random content"""
         file_type = random.choice(list(self.file_templates.keys()))
 
+        # Ensure gen_contents directory exists
+        gen_contents_dir = self.base_dir / "gen_contents"
+        gen_contents_dir.mkdir(exist_ok=True)
+
         # Generate filename
         prefixes = ["data", "config", "sample", "test", "demo", "temp", "generated"]
         suffix = random.choice(prefixes)
@@ -255,7 +259,8 @@ module.exports = {{ config, processRequest, validateData }};
         }
 
         filename = f"{suffix}_{timestamp}{extensions[file_type]}"
-        filepath = self.base_dir / filename
+        filepath = gen_contents_dir / filename
+        relative_path = f"gen_contents/{filename}"
 
         # Generate content
         content = self.file_templates[file_type]()
@@ -264,8 +269,8 @@ module.exports = {{ config, processRequest, validateData }};
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
 
-        logger.info(f"Created file: {filename}")
-        return filename
+        logger.info(f"Created file: {relative_path}")
+        return relative_path
 
     def git_commit_and_push(self, filename: str) -> bool:
         """Commit and push the new file"""
